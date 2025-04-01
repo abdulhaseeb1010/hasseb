@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+        }
+        .calculator {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .display {
+            width: 100%;
+            height: 50px;
+            text-align: right;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 50px);
+            gap: 5px;
+        }
+        button {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            background: gray;
+            color: white;
+        }
+        .operator { background: orange; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div class="buttons" id="buttons"></div>
+    </div>
+
+    <script>
+        // json fetch data 
+        const buttonsData = [
+            { label: '+', class: 'operator' }, { label: '7' }, { label: '8' }, { label: '9' },
+            { label: '-', class: 'operator' }, { label: '4' }, { label: '5' }, { label: '6' },
+            { label: '*', class: 'operator' }, { label: '1' }, { label: '2' }, { label: '3' },
+            { label: '/', class: 'operator' }, { label: '0' }, { label: '=', class: 'operator' }, { label: 'C', class: 'operator' }
+        ];
+// javascript
+        const buttonsContainer = document.getElementById('buttons');
+        const display = document.getElementById('display');
+
+        buttonsData.forEach(btn => {
+            const button = document.createElement('button');
+            button.textContent = btn.label;
+            if (btn.class) button.classList.add(btn.class);
+            button.addEventListener('click', () => handleButtonClick(btn.label));
+            buttonsContainer.appendChild(button);
+        });
+
+        function handleButtonClick(value) {
+            if (value === '=') {
+                try { display.value = eval(display.value); } catch { display.value = 'Error'; }
+            } else if (value === 'C') {
+                display.value = '';
+            } else {
+                display.value += value;
+            }
+        }
+    </script>
+</body>
+</html>
